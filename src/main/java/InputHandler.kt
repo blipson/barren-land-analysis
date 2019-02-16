@@ -26,8 +26,8 @@ class InputHandler {
                             throw Error("All rectangles inputted must have 4 positive integers representing the two corner points.")
                         }
                         Rectangle(
-                                coords[0].trim().toInt() to coords[1].trim().toInt(),
-                                coords[2].trim().toInt() to coords[3].trim().toInt()
+                                Node(coords[0].trim().toInt(), coords[1].trim().toInt()),
+                                Node(coords[2].trim().toInt(), coords[3].trim().toInt())
                         )
                     }
         }

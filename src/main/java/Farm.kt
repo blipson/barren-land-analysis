@@ -23,10 +23,10 @@ class Farm(private val width: Int, private val height: Int) {
         rectangles.map { rectangle ->
             for (x in 0 until width) {
                 for (y in 0 until height) {
-                    if (x >= rectangle.bottomLeft.first &&
-                            x <= rectangle.topRight.first &&
-                            y >= rectangle.bottomLeft.second &&
-                            y <= rectangle.topRight.second) {
+                    if (x >= rectangle.bottomLeft.x &&
+                            x <= rectangle.topRight.x &&
+                            y >= rectangle.bottomLeft.y &&
+                            y <= rectangle.topRight.y) {
                         // barren will be denoted with 1
                         land[x][y] = 1
                     }

@@ -14,35 +14,35 @@ class TestInputHandler {
     fun testLoadRectanglesHappyPath() {
         val newIn = ByteArrayInputStream("{\"1 2 3 4\", \"2 3 4 5\", \"3 4 5 6\"}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(1 to 2, 3 to 4), Rectangle(2 to 3, 4 to 5), Rectangle(3 to 4, 5 to 6)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(1, 2), Node(3, 4)), Rectangle(Node(2, 3), Node(4, 5)), Rectangle(Node(3, 4), Node(5, 6))), InputHandler.loadRectangles())
     }
 
     @Test
     fun testLoadRectanglesStripSpaces() {
         val newIn = ByteArrayInputStream("{\"   1 2 3 4 \", \" 2 3 4 5   \", \" 3 4 5 6 \"}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(1 to 2, 3 to 4), Rectangle(2 to 3, 4 to 5), Rectangle(3 to 4, 5 to 6)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(1, 2), Node(3, 4)), Rectangle(Node(2, 3), Node(4, 5)), Rectangle(Node(3, 4), Node(5, 6))), InputHandler.loadRectangles())
     }
 
     @Test
     fun testLoadRectanglesMultipleSpaces() {
         val newIn = ByteArrayInputStream("{\"1  2   3    4\", \"2   3  4   5\", \"3    4  5  6\"}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(1 to 2, 3 to 4), Rectangle(2 to 3, 4 to 5), Rectangle(3 to 4, 5 to 6)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(1, 2), Node(3, 4)), Rectangle(Node(2, 3), Node(4, 5)), Rectangle(Node(3, 4), Node(5, 6))), InputHandler.loadRectangles())
     }
 
     @Test
     fun testLoadRectanglesTabs() {
         val newIn = ByteArrayInputStream("{\"\t1\t2\t3\t4\t\", \"\t2\t3\t4\t5\t\", \"\t3\t4\t5\t6\t\"}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(1 to 2, 3 to 4), Rectangle(2 to 3, 4 to 5), Rectangle(3 to 4, 5 to 6)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(1, 2), Node(3, 4)), Rectangle(Node(2, 3), Node(4, 5)), Rectangle(Node(3, 4), Node(5, 6))), InputHandler.loadRectangles())
     }
 
     @Test
     fun testLoadRectanglesTabsAndSpacesCombined() {
         val newIn = ByteArrayInputStream("{\"\t1 \t 2\t3   \t4\t    \", \"\t  2  \t3  \t4  \t   5 \t\", \"\t 3   \t4\t    5 \t  6\t \"}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(1 to 2, 3 to 4), Rectangle(2 to 3, 4 to 5), Rectangle(3 to 4, 5 to 6)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(1, 2), Node(3, 4)), Rectangle(Node(2, 3), Node(4, 5)), Rectangle(Node(3, 4), Node(5, 6))), InputHandler.loadRectangles())
     }
 
     @Test
@@ -103,6 +103,6 @@ class TestInputHandler {
     fun testLoadRectanglesSpecialQuoteCharacter() {
         val newIn = ByteArrayInputStream("{“48 192 351 207”, “48 392 351 407”, “120 52 135 547”, “260 52 275 547”}".toByteArray())
         System.setIn(newIn)
-        assertEquals(listOf(Rectangle(48 to 192, 351 to 207), Rectangle(48 to 392, 351 to 407), Rectangle(120 to 52, 135 to 547), Rectangle(260 to 52, 275 to 547)), InputHandler.loadRectangles())
+        assertEquals(listOf(Rectangle(Node(48, 192), Node(351, 207)), Rectangle(Node(48, 392), Node(351, 407)), Rectangle(Node(120, 52), Node(135, 547)), Rectangle(Node(260, 52), Node(275, 547))), InputHandler.loadRectangles())
     }
 }

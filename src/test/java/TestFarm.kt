@@ -37,7 +37,7 @@ class TestFarm {
 
     @Test
     fun testMarkBarrenHappyPath() {
-        testFarm.markBarrenLands(listOf(Rectangle(0 to 0, 1 to 1), Rectangle(2 to 2, 4 to 4)))
+        testFarm.markBarrenLands(listOf(Rectangle(Node(0, 0), Node(1, 1)), Rectangle(Node(2, 2), Node(4, 4))))
         assertEquals(listOf(
                 listOf(1, 1, 0, 0, 0),
                 listOf(1, 1, 0, 0, 0),
@@ -49,7 +49,7 @@ class TestFarm {
 
     @Test
     fun testMarkBarrenJustOne() {
-        testFarm.markBarrenLands(listOf(Rectangle(0 to 0, 1 to 0)))
+        testFarm.markBarrenLands(listOf(Rectangle(Node(0, 0), Node(1, 0))))
         assertEquals(listOf(
                 listOf(1, 0, 0, 0, 0),
                 listOf(1, 0, 0, 0, 0),
@@ -61,7 +61,7 @@ class TestFarm {
 
     @Test
     fun testMarkBarrenOverlap() {
-        testFarm.markBarrenLands(listOf(Rectangle(0 to 0, 1 to 1), Rectangle(2 to 2, 4 to 4), Rectangle(1 to 3, 3 to 4)))
+        testFarm.markBarrenLands(listOf(Rectangle(Node(0, 0), Node(1, 1)), Rectangle(Node(2, 2), Node(4, 4)), Rectangle(Node(1, 3), Node(3, 4))))
         assertEquals(listOf(
                 listOf(1, 1, 0, 0, 0),
                 listOf(1, 1, 0, 1, 1),
@@ -73,28 +73,28 @@ class TestFarm {
 
     @Test
     fun testGetFertileLandsSimple() {
-        testFarm.markBarrenLands(listOf(Rectangle(0 to 0, 1 to 1), Rectangle(2 to 2, 4 to 4), Rectangle(1 to 3, 3 to 4)))
+        testFarm.markBarrenLands(listOf(Rectangle(Node(0, 0), Node(1, 1)), Rectangle(Node(2, 2), Node(4, 4)), Rectangle(Node(1, 3), Node(3, 4))))
         assertEquals(listOf(4, 6), testFarm.getFertileLands())
     }
 
     @Test
     fun testGetFertileLandsReadme() {
         val realFarm = Farm(20, 30)
-        realFarm.markBarrenLands(listOf(Rectangle(2 to 9, 18 to 10), Rectangle(2 to 20, 18 to 21), Rectangle(6 to 3, 7 to 27), Rectangle(13 to 3, 14 to 27)))
+        realFarm.markBarrenLands(listOf(Rectangle(Node(2, 9), Node(18, 10)), Rectangle(Node(2, 20), Node(18, 21)), Rectangle(Node(6, 3), Node(7, 27)), Rectangle(Node(13, 3), Node(14, 27))))
         assertEquals(listOf(45, 403), realFarm.getFertileLands())
     }
 
     @Test
     fun testGetFertileLandsFirstSample() {
         val realFarm = Farm(400, 600)
-        realFarm.markBarrenLands(listOf(Rectangle(0 to 292, 399 to 307)))
+        realFarm.markBarrenLands(listOf(Rectangle(Node(0, 292), Node(399, 307))))
         assertEquals(listOf(116800, 116800), realFarm.getFertileLands())
     }
 
     @Test
     fun testGetFertileLandsSecondSample() {
         val realFarm = Farm(400, 600)
-        realFarm.markBarrenLands(listOf(Rectangle(48 to 192, 351 to 207), Rectangle(48 to 392, 351 to 407), Rectangle(120 to 52, 135 to 547), Rectangle(260 to 52, 275 to 547)))
+        realFarm.markBarrenLands(listOf(Rectangle(Node(48, 192), Node(351, 207)), Rectangle(Node(48, 392), Node(351, 407)), Rectangle(Node(120, 52), Node(135, 547)), Rectangle(Node(260, 52), Node(275, 547))))
         assertEquals(listOf(22816, 192608), realFarm.getFertileLands())
     }
 }
