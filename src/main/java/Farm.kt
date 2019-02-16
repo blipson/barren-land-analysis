@@ -4,10 +4,10 @@ class Farm(private val width: Int, private val height: Int) {
     var land = Array(width) { IntArray(height) }
 
     init {
-        for (i in 0 until width) {
-            for (j in 0 until height) {
+        for (x in 0 until width) {
+            for (y in 0 until height) {
                 // Fertile will be denoted with 0
-                land[i][j] = 0
+                land[x][y] = 0
             }
         }
     }
