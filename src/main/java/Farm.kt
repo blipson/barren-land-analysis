@@ -19,7 +19,7 @@ class Farm(private val width: Int, private val height: Int) {
         }
     }
 
-    fun markBarren(rectangles: List<Rectangle>) {
+    fun markBarrenLands(rectangles: List<Rectangle>) {
         rectangles.map { rectangle ->
             for (x in 0 until width) {
                 for (y in 0 until height) {
