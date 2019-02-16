@@ -140,6 +140,6 @@ The hashmap values at each stage would be:
 
     [{2: 403}, {3: 1}] -> [{2: 403}, {3: 3}] -> [{2: 403}, {3: 6}] -> [{2: 403}, {3, 10}] ... [{2: 403}, {3: 45}]
 
-The iterator, which is still at `8, 11` would continue on it's merry way until reaching the end, since there are no more uncalculated fertile lands. The application will then take it's final values in the hashmap, sort them in ascending order, and return them as:
+The iterator, which is still at `8, 11` would continue on its merry way until reaching the end, since there are no more uncalculated fertile lands. The application will then take it's final values in the hashmap, sort them in ascending order, and return them as:
 
     [45, 403]
