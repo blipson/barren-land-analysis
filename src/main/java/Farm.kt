@@ -35,65 +35,64 @@ class Farm(private val width: Int, private val height: Int) {
         }
     }
 
-    private val queue: LinkedList<Node> = LinkedList()
-    private val areasMap: MutableMap<Int, Int> = mutableMapOf()
-    private var landAccum = 1
-
-    private fun addNextNodesToQueue(): MutableMap<Int, Int> {
-        val node = queue.pop()
+    private fun addNextNodesToQueue(fertileLandAccum: FertileLandAccum): MutableMap<Int, Int> {
+        val node = fertileLandAccum.queue.pop()
         if (land[node.x][node.y] == 0) {
             if (node.x > 0) {
                 if (land[node.x - 1][node.y] == 0) {
-                    queue.add(Node(node.x - 1, node.y))
+                    fertileLandAccum.queue.add(Node(node.x - 1, node.y))
                 }
             }
             if (node.x < width - 1) {
                 if (land[node.x + 1][node.y] == 0) {
-                    queue.add(Node(node.x + 1, node.y))
+                    fertileLandAccum.queue.add(Node(node.x + 1, node.y))
                 }
             }
             if (node.y > 0) {
                 if (land[node.x][node.y - 1] == 0) {
-                    queue.add(Node(node.x, node.y - 1))
+                    fertileLandAccum.queue.add(Node(node.x, node.y - 1))
                 }
             }
             if (node.y < height - 1) {
                 if (land[node.x][node.y + 1] == 0) {
-                    queue.add(Node(node.x, node.y + 1))
+                    fertileLandAccum.queue.add(Node(node.x, node.y + 1))
                 }
             }
-            land[node.x][node.y] = landAccum
-            areasMap[landAccum] = areasMap[landAccum]!! + 1 // Will never be null, but still needs a check in order to be compatible with the Java HashMap .get() function
+            land[node.x][node.y] = fertileLandAccum.landAccum
+            fertileLandAccum.areasMap[fertileLandAccum.landAccum] = fertileLandAccum.areasMap[fertileLandAccum.landAccum]!! + 1 // Will never be null, but still needs a check in order to be compatible with the Java HashMap .get() function
         }
-        return areasMap
+        return fertileLandAccum.areasMap
     }
 
-    private fun startNewFertileAreaCalculation(current: Node) {
-        val node = Node(current.x, current.y)
-        if (land[current.x][current.y] == 0) {
-            landAccum++
-            areasMap[landAccum] = 0
-            queue.add(node)
+    private fun startNewFertileAreaCalculation(fertileLandAccum: FertileLandAccum): MutableMap<Int, Int> {
+        val node = Node(fertileLandAccum.current.x, fertileLandAccum.current.y)
+        if (land[fertileLandAccum.current.x][fertileLandAccum.current.y] == 0) {
+            fertileLandAccum.landAccum++
+            fertileLandAccum.areasMap[fertileLandAccum.landAccum] = 0
+            fertileLandAccum.queue.add(node)
         }
-        return
+        return fertileLandAccum.areasMap
+    }
+
+    private tailrec fun getFertileLands(fertileLandAccum: FertileLandAccum): MutableMap<Int, Int> {
+        return if (fertileLandAccum.current.x >= width || fertileLandAccum.current.y >= height) {
+            fertileLandAccum.areasMap
+        }
+        else {
+            val (nextCurrent, nextAreasMap) = if (fertileLandAccum.queue.isEmpty()) {
+                if (fertileLandAccum.current.x == width - 1) {
+                    Node(0, fertileLandAccum.current.y + 1) to startNewFertileAreaCalculation(fertileLandAccum)
+                } else {
+                    Node(fertileLandAccum.current.x + 1, fertileLandAccum.current.y) to startNewFertileAreaCalculation(fertileLandAccum)
+                }
+            } else {
+                fertileLandAccum.current to addNextNodesToQueue(fertileLandAccum)
+            }
+            getFertileLands(FertileLandAccum(nextCurrent, nextAreasMap, fertileLandAccum.queue, fertileLandAccum.landAccum))
+        }
     }
 
     fun getFertileLands(): List<Int> {
-        val current = Node(0, 0)
-        while (current.x < width && current.y < height) {
-            if (queue.isEmpty()) {
-                startNewFertileAreaCalculation(current)
-                if (current.x == width - 1) {
-                    current.x = 0
-                    current.y++
-                } else {
-                    current.x++
-                }
-            } else {
-                addNextNodesToQueue()
-            }
-        }
-        val result = areasMap.values.toList()
-        return result.sorted()
+        return getFertileLands(FertileLandAccum(Node(0, 0), mutableMapOf(), LinkedList(), 1)).values.toList().sorted()
     }
 }
