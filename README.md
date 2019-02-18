@@ -8,7 +8,13 @@
 - JUnit 5.4.0
 
 ## Running Locally
+##### Application
 `./gradlew clean run`
+
+##### Distribution
+    $ ./gradlew clean distTar
+    $ tar -xzf build/distributions/barren-land-analysis-1.0-SNAPSHOT.tar -C build/distributions
+    $ ./build/distributions/barren-land-analysis-1.0-SNAPSHOT/bin/barren-land-analysis
 
 Alternatively you can import the project into IntelliJ and make a "Kotlin Application" run configuration with the main class set to `Main.kt`.
 

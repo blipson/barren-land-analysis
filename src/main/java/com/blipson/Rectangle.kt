@@ -1,3 +1,5 @@
+package com.blipson
+
 data class Rectangle(val bottomLeft: Node, val topRight: Node) {
     init {
         if (bottomLeft.x > topRight.x ||

@@ -1,3 +1,5 @@
+package com.blipson
+
 class Main {
     companion object {
         @JvmStatic

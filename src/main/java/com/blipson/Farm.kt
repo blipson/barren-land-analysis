@@ -1,3 +1,5 @@
+package com.blipson
+
 import java.util.*
 
 class Farm(private val width: Int, private val height: Int) {

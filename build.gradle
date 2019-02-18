@@ -3,7 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
 }
 
-mainClassName = 'Main'
+application {
+    mainClassName = 'com.blipson.Main'
+}
 
 group 'barren-land-analysis'
 version '1.0-SNAPSHOT'
