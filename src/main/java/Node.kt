@@ -1,1 +1,1 @@
-data class Node(var x: Int, var y: Int)
+data class Node(val x: Int, val y: Int)
